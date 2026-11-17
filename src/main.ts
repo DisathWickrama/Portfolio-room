@@ -83,7 +83,7 @@ function start() {
     const target = V(-0.35, 1.25, -0.7);
     const dir = V(4.6, 2.55, 6.4).normalize();
     const aspect = innerWidth / innerHeight;
-    const dist = 8.9 * Math.max(1, Math.pow(1.45 / aspect, 0.66));
+    const dist = 8.9 * Math.max(1, Math.pow(1.45 / aspect, 0.78));
     return { position: target.clone().addScaledVector(dir, dist), target };
   };
   const crtView = (): View => {

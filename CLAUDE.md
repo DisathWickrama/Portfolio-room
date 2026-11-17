@@ -40,8 +40,11 @@ npm run build      # typecheck + production build into dist/
 npm run preview    # serve dist/ locally
 ```
 
-Deploy: pushing to the deploy branch runs `.github/workflows/deploy.yml`, which
-builds and publishes `dist/` to GitHub Pages.
+Deploy: pushing to `main` or `claude/amazing-johnson-rop29q` runs
+`.github/workflows/deploy.yml`, which builds and publishes `dist/` to GitHub
+Pages at https://disathwickrama.github.io/Portfolio-room/ (Pages source must be
+set to "GitHub Actions" in the repo settings). If the deploy branch changes,
+update the `branches:` list in that workflow.
 
 ## Folder map
 
@@ -52,14 +55,14 @@ src/
   style.css             HUD, panels, intro and terminal styling
   data/
     portfolio.ts        ALL portfolio content (about, skills, projects, contact)
-  core/                 engine-level systems, no scene knowledge
+  core/                 engine-level systems; know nothing about this room (may use scene/kit.ts helpers)
     quality.ts          device detection -> quality tier (mobile fallback)
     post.ts             render pipeline: bloom + film grain/vignette
     cameraRig.ts        eased camera: home view, focus views, pointer parallax
     interactions.ts     raycast hotspots: hover, click/tap, highlight
   scene/                everything you can see; each file builds one thing
     kit.ts              low-poly helpers (box, cyl, flat materials, canvas textures)
-    room.ts             floor, walls, window frame, furniture
+    room.ts             floor, walls, window frame, furniture, desk clutter, string lights
     cityView.ts         Sydney skyline backdrop (canvas) + falling rain outside
     windowRain.ts       rain-on-glass shader
     dayNight.ts         lighting rig + day/night blend

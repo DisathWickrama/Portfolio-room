@@ -67,14 +67,14 @@ export function buildCrt(): Crt {
     ctx.font = `bold 17px ${CONDENSED}`;
     ctx.textBaseline = 'middle';
     ctx.textAlign = 'left';
-    ctx.fillText('NOCTURNE // COMMAND', 8, 12);
+    ctx.fillText('NOCTURNE // COMMAND', 8, 12, 230);
     ctx.textAlign = 'right';
     ctx.fillText('02:00', w - 8, 12);
     // hex cluster
     ctx.lineWidth = 3;
     for (let i = 0; i < 3; i++) {
       const on = (f + i) % 3 === 0;
-      hex(ctx, 64 + i * 46, 80 + (i % 2) * 26, 26);
+      hex(ctx, 36 + i * 38, 82 + (i % 2) * 22, 21);
       ctx.strokeStyle = '#ff6a13';
       ctx.stroke();
       if (on) { ctx.fillStyle = 'rgba(255,106,19,0.85)'; ctx.fill(); }
@@ -82,10 +82,10 @@ export function buildCrt(): Crt {
     ctx.fillStyle = '#ff6a13';
     ctx.textAlign = 'left';
     ctx.font = `bold 44px ${CONDENSED}`;
-    ctx.fillText('STANDBY', 150, 92);
+    ctx.fillText('STANDBY', 150, 92, 158);
     ctx.font = `bold 15px ${CONDENSED}`;
     ctx.fillStyle = '#c9a2ff';
-    ctx.fillText('OPERATOR: DISATH', 152, 124);
+    ctx.fillText('OPERATOR: DISATH', 152, 124, 156);
     // bars
     for (let i = 0; i < 12; i++) {
       const v = 0.3 + 0.7 * Math.abs(Math.sin(f * 0.7 + i * 1.3));

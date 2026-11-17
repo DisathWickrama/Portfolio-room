@@ -7,7 +7,7 @@
  * themselves relative to the same numbers.
  */
 import * as THREE from 'three';
-import { box, cyl, flat, glow, canvasTexture, rng } from './kit';
+import { box, cyl, flat, glow, canvasTexture, rng, CONDENSED } from './kit';
 
 export const ROOM = {
   w: 6,
@@ -119,6 +119,37 @@ export function buildRoom(): Room {
     g.add(box(0.5, 0.18, 0.02, wood, deskX + 0.8, 0.62 - i * 0.22, deskZ + 0.43));
     g.add(box(0.12, 0.025, 0.03, flat(0xd9b27c), deskX + 0.8, 0.62 - i * 0.22, deskZ + 0.45));
   }
+  // desk clutter: alarm clock stuck on 2:00, notebook, pencil
+  const clockFace = new THREE.MeshBasicMaterial({
+    map: canvasTexture(128, 64, (ctx, cw, ch) => {
+      ctx.fillStyle = '#120404';
+      ctx.fillRect(0, 0, cw, ch);
+      ctx.fillStyle = '#ff4a2e';
+      ctx.font = `bold 50px ${CONDENSED}`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('2:00', cw / 2, ch / 2 + 3);
+    }),
+  });
+  clockFace.color.setScalar(1.6);
+  const clock = new THREE.Group();
+  clock.add(box(0.2, 0.1, 0.07, flat(0x2a2730), 0, 0.05, 0));
+  const face = new THREE.Mesh(new THREE.PlaneGeometry(0.17, 0.075), clockFace);
+  face.position.set(0, 0.052, 0.036);
+  clock.add(face);
+  clock.position.set(deskX + 0.02, ROOM.deskTop, deskZ - 0.22);
+  clock.rotation.y = 0.45;
+  g.add(clock);
+  const notebook = box(0.26, 0.018, 0.34, flat(0x8b3dff), deskX + 0.5, ROOM.deskTop + 0.009, deskZ + 0.22);
+  notebook.rotation.y = 0.3;
+  g.add(notebook);
+  const page = box(0.22, 0.004, 0.3, flat(0xf4eee6), deskX + 0.5, ROOM.deskTop + 0.02, deskZ + 0.22);
+  page.rotation.y = 0.3;
+  g.add(page);
+  const pencil = cyl(0.006, 0.006, 0.17, flat(0xffc247), 5, deskX + 0.52, ROOM.deskTop + 0.03, deskZ + 0.2);
+  pencil.rotation.set(Math.PI / 2, 0, 0.9);
+  g.add(pencil);
+
   const chair = new THREE.Group();
   const chairMat = flat(0x3a3550);
   chair.add(box(0.46, 0.06, 0.46, chairMat, 0, 0.46, 0));
