@@ -78,4 +78,4 @@ export function softDot(size = 64, inner = 'rgba(255,255,255,1)', outer = 'rgba(
   });
 }
 
-export const CONDENSED = "Impact, Haettenschweiler, 'Arial Narrow Bold', 'Arial Narrow', sans-serif";
+export const CONDENSED = "Impact, Haettenschweiler, 'Arial Narrow Bold', 'Roboto Condensed', 'sans-serif-condensed', 'Liberation Sans Narrow', 'Nimbus Sans Narrow', 'DejaVu Sans Condensed', 'Arial Narrow', sans-serif";

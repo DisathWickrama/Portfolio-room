@@ -16,6 +16,8 @@ export interface Hotspot {
   onClick: () => void;
   /** Local-space offset for the pulsing marker. */
   markerOffset?: THREE.Vector3;
+  /** Hidden extras (cat, mug, lamp) skip the marker. */
+  noMarker?: boolean;
 }
 
 interface Entry extends Hotspot {
@@ -28,6 +30,8 @@ export class Interactions {
   readonly pointer = new THREE.Vector2();
   enabled = true;
   markersVisible = true;
+  /** Fired on a click/tap that hits no hotspot (used for "click away to go back"). */
+  onMiss?: () => void;
   private entries: Entry[] = [];
   private ray = new THREE.Raycaster();
   private hovered: Entry | null = null;
@@ -55,6 +59,7 @@ export class Interactions {
     marker.renderOrder = 10;
     h.object.updateWorldMatrix(true, false);
     marker.position.copy(h.markerOffset ?? new THREE.Vector3()).applyMatrix4(h.object.matrixWorld);
+    marker.visible = !h.noMarker;
     this.scene.add(marker);
     this.entries.push({ ...h, marker, mats });
   }
@@ -85,6 +90,7 @@ export class Interactions {
     if (Math.hypot(e.clientX - this.down.x, e.clientY - this.down.y) > 10) return;
     const en = this.find(e);
     if (en) { this.setHover(null); en.onClick(); }
+    else this.onMiss?.();
   }
 
   private setHover(en: Entry | null) {
@@ -104,9 +110,9 @@ export class Interactions {
     this.entries.forEach((en, i) => {
       const pulse = 0.5 + 0.5 * Math.sin(time * 2.2 + i * 1.7);
       const d = en.marker.position.distanceTo(this.camera.position);
-      const s = (0.02 + pulse * 0.012) * d;
+      const s = (0.011 + pulse * 0.006) * d;
       en.marker.scale.set(s, s, 1);
-      en.marker.material.opacity = (0.35 + pulse * 0.45) * this.markerFade;
+      en.marker.material.opacity = (0.25 + pulse * 0.4) * this.markerFade;
     });
   }
 }
