@@ -83,7 +83,7 @@ function start() {
     const target = V(-0.35, 1.25, -0.7);
     const dir = V(4.6, 2.55, 6.4).normalize();
     const aspect = innerWidth / innerHeight;
-    const dist = 8.9 * Math.max(1, Math.pow(1.45 / aspect, 0.85));
+    const dist = 8.9 * Math.max(1, Math.pow(1.45 / aspect, 0.66));
     return { position: target.clone().addScaledVector(dir, dist), target };
   };
   const crtView = (): View => {
@@ -214,6 +214,7 @@ function start() {
   };
   applyDay(0);
 
+  let coveredFor = 0;
   let last = performance.now();
   let time = 0;
   renderer.setAnimationLoop(() => {
@@ -227,6 +228,8 @@ function start() {
     glass.update(time);
     hotspots.update(time, dt);
     rig.update(dt, hotspots.pointer);
+    // the terminal covers the whole canvas: skip drawing the room to save battery
+    if (terminal.isOpen) { coveredFor += dt; if (coveredFor > 0.6) return; } else coveredFor = 0;
     post.render(time);
   });
 

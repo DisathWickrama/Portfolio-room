@@ -295,7 +295,10 @@ export class Terminal {
       if (ln.run) { node.dataset.run = ln.run; node.classList.add('run'); node.setAttribute('role', 'button'); }
     }
     if (ln.cls) node.classList.add(ln.cls);
-    node.textContent = ln.text;
+    // keep indentation outside links/buttons so the underline hugs the words
+    const indent = ln.href || ln.run ? ln.text.length - ln.text.trimStart().length : 0;
+    if (indent) row.append(ln.text.slice(0, indent));
+    node.textContent = ln.text.slice(indent);
     row.appendChild(node);
     this.out.appendChild(row);
   }
