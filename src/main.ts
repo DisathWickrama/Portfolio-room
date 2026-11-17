@@ -246,7 +246,7 @@ function start() {
   });
 
   // debugging handle for screenshots / console poking
-  Object.assign(window, { __room: { rig, focusCrt, focusPoster, focusVinyl, goHome, toggleDay, terminal } });
+  Object.assign(window, { __room: { rig, focusCrt, focusPoster, focusVinyl, goHome, toggleDay, terminal, engine, setMusic } });
 }
 
 /** No WebGL: skip the room and make the terminal the whole site. */
