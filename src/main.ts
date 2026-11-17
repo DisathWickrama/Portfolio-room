@@ -127,7 +127,10 @@ function start() {
   const setMode = (m: Mode) => {
     mode = m;
     hud.setFocused(m !== 'home');
-    hotspots.enabled = m === 'home';
+    // while looking at a poster or the record player you can still click other
+    // objects directly; only the full-screen terminal blocks the scene
+    hotspots.enabled = m !== 'crt';
+    hotspots.markersVisible = m === 'home';
     if (m !== 'poster') projectPanel.hide();
     if (m !== 'vinyl') vinylPanel.hide();
     if (m !== 'crt') { terminal.close(); hud.setHidden(false); }
@@ -198,7 +201,11 @@ function start() {
   hotspots.onMiss = () => { if (mode === 'poster' || mode === 'vinyl') goHome(); };
   addEventListener('keydown', (e) => { if (e.key === 'Escape') goHome(); });
 
+  hud.setHidden(true);
+  hotspots.enabled = false;
   hud.showIntro(ui, () => {
+    hud.setHidden(false);
+    hotspots.enabled = true;
     rig.goHome(2.8);
     engine.unlock();
     setRain(true);

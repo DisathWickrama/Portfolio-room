@@ -67,18 +67,18 @@ const paintLastShift: Painter = (ctx, w, h) => {
   ctx.fillRect(bx + 112, by + 40, 26, 46);
   // sign pole with red neon
   ctx.fillStyle = '#070b0c';
-  ctx.fillRect(w * 0.8, ground - 190, 6, 190);
-  ctx.fillRect(w * 0.8 - 44, ground - 200, 94, 44);
-  const neon = ctx.createRadialGradient(w * 0.8 + 3, ground - 178, 0, w * 0.8 + 3, ground - 178, 110);
+  ctx.fillRect(w * 0.8, ground - 140, 6, 140);
+  ctx.fillRect(w * 0.8 - 44, ground - 150, 94, 42);
+  const neon = ctx.createRadialGradient(w * 0.8 + 3, ground - 129, 0, w * 0.8 + 3, ground - 129, 100);
   neon.addColorStop(0, 'rgba(255,40,40,0.5)');
   neon.addColorStop(1, 'rgba(255,40,40,0)');
   ctx.fillStyle = neon;
-  ctx.fillRect(w * 0.5, ground - 300, w * 0.5, 260);
+  ctx.fillRect(w * 0.5, ground - 240, w * 0.5, 240);
   ctx.fillStyle = '#ff3b3b';
   ctx.font = `bold 30px ${CONDENSED}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  ctx.fillText('OPEN', w * 0.8 + 3, ground - 177);
+  ctx.fillText('OPEN', w * 0.8 + 3, ground - 128);
   // fog banks
   for (let i = 0; i < 16; i++) {
     const fx = r() * w, fy = ground - 60 + r() * 150, fr = 90 + r() * 130;

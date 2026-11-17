@@ -27,9 +27,11 @@ export class Hud {
   private musicBtn = el('button', 'pill', '<i></i><span>Music</span>');
   private toastEl = el('div', 'toast');
   private toastTimer = 0;
+  private sub!: HTMLElement;
 
   constructor(parent: HTMLElement, actions: HudActions, touch: boolean) {
     const brand = el('div', 'brand', '<b>DISATH</b><span>room · 2am · sydney</span>');
+    this.sub = brand.querySelector('span')!;
     const controls = el('div', 'controls');
     this.dayBtn.setAttribute('aria-label', 'Toggle day and night');
     this.rainBtn.setAttribute('aria-label', 'Toggle rain sound');
@@ -60,6 +62,7 @@ export class Hud {
   setDay(isDay: boolean) {
     this.dayBtn.classList.toggle('on', isDay);
     this.dayBtn.querySelector('span')!.textContent = isDay ? 'Day' : 'Night';
+    this.sub.textContent = isDay ? 'room · rainy morning · sydney' : 'room · 2am · sydney';
   }
   setRain(on: boolean) { this.rainBtn.classList.toggle('on', on); }
   setMusic(on: boolean) { this.musicBtn.classList.toggle('on', on); }
